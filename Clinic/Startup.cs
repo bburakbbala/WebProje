@@ -1,4 +1,6 @@
 using Clinic.DataAccess.Data;
+using Clinic.DataAccess.Repository;
+using Clinic.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +36,8 @@ namespace Clinic
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); // UnitOfWork now will be added to project
+                                                           // as a part of the dependency injection
             services.AddControllersWithViews();
         }
 
