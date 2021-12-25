@@ -38,6 +38,8 @@ namespace Clinic
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>(); // UnitOfWork now will be added to project
                                                            // as a part of the dependency injection
+                                                           // it will be available on all controllers
+                                                           // using dependency injection
             services.AddControllersWithViews();
         }
 
@@ -67,7 +69,7 @@ namespace Clinic
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{area=Patient}/{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

@@ -7,9 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Clinic.Areas.Patient.Controllers
+namespace Clinic.Areas.User.Controllers
 {
-    [Area("Patient")]
+    [Area("User")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

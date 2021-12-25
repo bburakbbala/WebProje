@@ -1,5 +1,6 @@
 ﻿using Clinic.DataAccess.Data;
 using Clinic.DataAccess.Repository.IRepository;
+using Clinic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,15 @@ namespace Clinic.DataAccess.Repository
         private readonly ApplicationDbContext _db;
 
         public ISP_Call SP_Call { get; private set; }
+        public IHospitalRepository Hospital { get; private set; }
+        public IDoctorRepository Doctor { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             SP_Call = new SP_Call(_db);
+            Hospital = new HospitalRepository(_db);
+            Doctor = new DoctorRepository(_db);
         }
 
         public void Dispose()
