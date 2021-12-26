@@ -18,7 +18,7 @@ namespace Clinic.DataAccess.Data
         public DbSet<BloodType> BloodTypes { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<CountryOrRegion> CountryOrRegions { get; set; }
-        public DbSet<Departmant> Departmants { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<DoctorTreatment> DoctorTreatments { get; set; }
         public DbSet<Firstname> Firstnames { get; set; }

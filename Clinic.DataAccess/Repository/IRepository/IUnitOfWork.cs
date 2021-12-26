@@ -9,8 +9,9 @@ namespace Clinic.DataAccess.Repository.IRepository
     public interface IUnitOfWork : IDisposable
     {
         ISP_Call SP_Call { get; }
+        Task SaveAsync();
         IHospitalRepository Hospital { get; }
         IDoctorRepository Doctor { get; }
-
+        IDepartmentRepository Department { get; }
     }
 }

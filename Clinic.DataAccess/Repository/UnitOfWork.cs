@@ -16,6 +16,7 @@ namespace Clinic.DataAccess.Repository
         public ISP_Call SP_Call { get; private set; }
         public IHospitalRepository Hospital { get; private set; }
         public IDoctorRepository Doctor { get; private set; }
+        public IDepartmentRepository Department { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -23,6 +24,7 @@ namespace Clinic.DataAccess.Repository
             SP_Call = new SP_Call(_db);
             Hospital = new HospitalRepository(_db);
             Doctor = new DoctorRepository(_db);
+            Department = new DepartmentRepository(_db);
         }
 
         public void Dispose()
@@ -31,9 +33,9 @@ namespace Clinic.DataAccess.Repository
             GC.SuppressFinalize(this);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            _db.SaveChanges(); // in repository we are not saving any changes that we made on db
+            await _db.SaveChangesAsync(); // in repository we are not saving any changes that we made on db
         }
     }
 }

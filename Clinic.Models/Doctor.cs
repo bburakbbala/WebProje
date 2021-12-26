@@ -36,7 +36,7 @@ namespace Clinic.Models
 
         public int? DepartmantId { get; set; }
         [ForeignKey("DepartmantId")]
-        public Departmant Departmant { get; set; }
+        public Department Departmant { get; set; }
 
         [NotMapped]
         public string FirstnameLastname

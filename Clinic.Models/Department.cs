@@ -2,7 +2,7 @@
 
 namespace Clinic.Models
 {
-    public class Departmant
+    public class Department
     {
         public int Id { get; set; }
 
