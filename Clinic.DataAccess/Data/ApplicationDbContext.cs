@@ -1,9 +1,6 @@
 ﻿using Clinic.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Clinic.DataAccess.Data
 {

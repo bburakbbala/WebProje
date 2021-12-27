@@ -36,7 +36,7 @@ namespace Clinic.Areas.Admin.Controllers
             HospitalVM hospitalVM = new HospitalVM()
             {
                 Hospital = new Hospital(),
-                DepartmentList = departments.Select(i => new SelectListItem
+                HospitalDepartmentList = departments.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()

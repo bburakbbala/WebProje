@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Doctor\**" />
+    <Content Remove="Areas\Doctor\**" />
+    <EmbeddedResource Remove="Areas\Doctor\**" />
+    <None Remove="Areas\Doctor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.13" />
@@ -24,11 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Doctor\" />
-    <Folder Include="Areas\Doctor\Controllers\" />
-    <Folder Include="Areas\Doctor\Views\" />
     <Folder Include="Areas\Patient\Controllers\" />
     <Folder Include="Areas\Patient\Views\" />
+    <Folder Include="Views\Shared\Address\CountryOrRegion\" />
+    <Folder Include="Views\Shared\Address\City\" />
+    <Folder Include="Views\Shared\Address\Province\" />
+    <Folder Include="Views\Shared\Firstname\" />
+    <Folder Include="Views\Shared\Lastname\" />
+    <Folder Include="Views\Shared\Profession\" />
   </ItemGroup>
 
 </Project>

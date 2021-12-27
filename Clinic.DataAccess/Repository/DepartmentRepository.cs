@@ -1,11 +1,7 @@
 ﻿using Clinic.DataAccess.Data;
 using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinic.DataAccess.Repository
 {
@@ -19,8 +15,8 @@ namespace Clinic.DataAccess.Repository
 
         public void Update(Department departmant)
         {
-            var objFromDb = _db.Departments.FirstOrDefault(d =>d.Id == departmant.Id);
-            if(objFromDb != null)
+            var objFromDb = _db.Departments.FirstOrDefault(d => d.Id == departmant.Id);
+            if (objFromDb != null)
             {
                 objFromDb.Name = departmant.Name;
             }

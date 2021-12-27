@@ -1,11 +1,7 @@
 ﻿using Clinic.DataAccess.Data;
 using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinic.DataAccess.Repository
 {
@@ -19,7 +15,6 @@ namespace Clinic.DataAccess.Repository
 
         public void Update(Doctor doctor)
         {
-            throw new NotImplementedException();
         }
     }
 }

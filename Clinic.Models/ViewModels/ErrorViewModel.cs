@@ -1,5 +1,3 @@
-using System;
-
 namespace Clinic.Models.ViewModels
 {
     public class ErrorViewModel

@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinic.Models.ViewModels
 {
@@ -11,9 +7,11 @@ namespace Clinic.Models.ViewModels
     {
         public Hospital Hospital { get; set; }
 
-        public IEnumerable<SelectListItem> DepartmentList { get; set; }
+        public IEnumerable<SelectListItem> HospitalDepartmentList { get; set; }
 
         public IEnumerable<SelectListItem> LabList { get; set; }
+
+        public IEnumerable<SelectListItem> DoctorList { get; set; }
 
         public Address Address { get; set; }
     }

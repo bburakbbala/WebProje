@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clinic.Models
 {
@@ -18,7 +13,7 @@ namespace Clinic.Models
         public DateTime ExpirationDate
         {
             get { return expirationData; }
-            
+
             private set { expirationData = Date.AddDays(3); }
         }
 

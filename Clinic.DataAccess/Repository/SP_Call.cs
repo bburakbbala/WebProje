@@ -1,20 +1,18 @@
-﻿using Clinic.DataAccess.Repository.IRepository;
+﻿using Clinic.DataAccess.Data;
+using Clinic.DataAccess.Repository.IRepository;
 using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Clinic.DataAccess.Data;
-using Microsoft.Data.SqlClient;
 
 namespace Clinic.DataAccess.Repository
 {
     public class SP_Call : ISP_Call
     {
         private readonly ApplicationDbContext _db;
-        private static string ConnectionString = ""; 
+        private static string ConnectionString = "";
 
         public SP_Call(ApplicationDbContext db)
         {
