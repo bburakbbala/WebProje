@@ -32,6 +32,11 @@ namespace Clinic.DataAccess.Repository
             return await dbSet.FindAsync(id);
         }
 
+        public async Task<T> GetAsync(Guid id)
+        {
+            return await dbSet.FindAsync(id);
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
@@ -78,6 +83,12 @@ namespace Clinic.DataAccess.Repository
         }
 
         public async Task RemoveAsync(int id)
+        {
+            T entity = await dbSet.FindAsync(id);
+            await RemoveAsync(entity);
+        }
+
+        public async Task RemoveAsync(Guid id)
         {
             T entity = await dbSet.FindAsync(id);
             await RemoveAsync(entity);

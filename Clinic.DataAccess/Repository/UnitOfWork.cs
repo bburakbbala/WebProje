@@ -17,6 +17,7 @@ namespace Clinic.DataAccess.Repository
         public IHospitalRepository Hospital { get; private set; }
         public IDoctorRepository Doctor { get; private set; }
         public IDepartmentRepository Department { get; private set; }
+        public ILabRepository Lab { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -25,6 +26,7 @@ namespace Clinic.DataAccess.Repository
             Hospital = new HospitalRepository(_db);
             Doctor = new DoctorRepository(_db);
             Department = new DepartmentRepository(_db);
+            Lab = new LabRepository(_db);
         }
 
         public void Dispose()

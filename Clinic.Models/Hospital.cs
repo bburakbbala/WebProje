@@ -12,9 +12,14 @@ namespace Clinic.Models
     {
         public Guid Id { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [Required]
         [Display(Name = "Hospital Name")]
         public string Name { get; set; }
+
+        [Required]
+        public string Description { get; set; }
 
         [Required]
         public int? AddressId { get; set; }

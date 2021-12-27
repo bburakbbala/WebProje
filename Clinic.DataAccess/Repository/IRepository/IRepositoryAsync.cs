@@ -11,6 +11,8 @@ namespace Clinic.DataAccess.Repository.IRepository
     {
         Task<T> GetAsync(int id);
 
+        Task<T> GetAsync(Guid id);
+
         Task<IEnumerable<T>> GetAllAsync(
             Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -24,6 +26,7 @@ namespace Clinic.DataAccess.Repository.IRepository
 
         Task AddAsync(T entity);
         Task RemoveAsync(int id);
+        Task RemoveAsync(Guid id);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entity);
     }

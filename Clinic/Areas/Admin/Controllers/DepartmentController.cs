@@ -46,7 +46,7 @@ namespace Clinic.Areas.Admin.Controllers
         #region API_CALS
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync()
+        public async Task<IActionResult> GetAll()
         {
             var allObj = await _unitOfWork.Department.GetAllAsync();
             return Json(new { data = allObj });
