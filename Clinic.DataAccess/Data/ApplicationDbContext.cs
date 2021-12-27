@@ -22,6 +22,7 @@ namespace Clinic.DataAccess.Data
         public DbSet<Lastname> Lastnames { get; set; }
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<HospitalDepartmant> HospitalDepartmants { get; set; }
+        public DbSet<HospitalDoctor> HospitalDoctors { get; set; }
         public DbSet<HospitalLab> HospitalLabs { get; set; }
         public DbSet<HospitalVisit> HospitalVisits { get; set; }
         public DbSet<Lab> Labs { get; set; }

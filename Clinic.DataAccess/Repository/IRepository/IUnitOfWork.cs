@@ -17,6 +17,7 @@ namespace Clinic.DataAccess.Repository.IRepository
         IFirstnameRepository Firstname { get; }
         IHospitalRepository Hospital { get; }
         IHospitalDepartmentRepository HospitalDepartment { get; }
+        IHospitalDoctorRepository HospitalDoctor { get; }
         IHospitalLabRepository HospitalLab { get; }
         IHospitalVisitRepository HospitalVisit { get; }
         ILabRepository Lab { get; }

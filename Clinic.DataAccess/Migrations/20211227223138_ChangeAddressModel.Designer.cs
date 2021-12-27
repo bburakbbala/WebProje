@@ -4,14 +4,16 @@ using Clinic.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Clinic.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211227223138_ChangeAddressModel")]
+    partial class ChangeAddressModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,28 +252,6 @@ namespace Clinic.DataAccess.Migrations
                     b.HasIndex("HospitalId");
 
                     b.ToTable("HospitalDepartmants");
-                });
-
-            modelBuilder.Entity("Clinic.Models.HospitalDoctor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid?>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("HospitalId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("HospitalId");
-
-                    b.ToTable("HospitalDoctors");
                 });
 
             modelBuilder.Entity("Clinic.Models.HospitalLab", b =>
@@ -1069,21 +1049,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasForeignKey("HospitalId");
 
                     b.Navigation("Departmant");
-
-                    b.Navigation("Hospital");
-                });
-
-            modelBuilder.Entity("Clinic.Models.HospitalDoctor", b =>
-                {
-                    b.HasOne("Clinic.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId");
-
-                    b.HasOne("Clinic.Models.Hospital", "Hospital")
-                        .WithMany()
-                        .HasForeignKey("HospitalId");
-
-                    b.Navigation("Doctor");
 
                     b.Navigation("Hospital");
                 });

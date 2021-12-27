@@ -20,6 +20,7 @@ namespace Clinic.DataAccess.Repository
         public IDoctorTreatmentRepository DoctorTreatment { get; private set; }
         public IFirstnameRepository Firstname { get; private set; }
         public IHospitalDepartmentRepository HospitalDepartment { get; private set; }
+        public IHospitalDoctorRepository HospitalDoctor { get; private set; }
         public IHospitalLabRepository HospitalLab { get; private set; }
         public IHospitalRepository Hospital { get; private set; }
         public IHospitalVisitRepository HospitalVisit { get; private set; }
@@ -53,6 +54,7 @@ namespace Clinic.DataAccess.Repository
             Doctor = new DoctorRepository(_db);
             Firstname = new FirstnameRepository(_db);
             HospitalDepartment = new HospitalDepartmentRepository(_db);
+            HospitalDoctor = new HospitalDoctorRepository(_db);
             HospitalLab = new HospitalLabRepository(_db);
             Hospital = new HospitalRepository(_db);
             HospitalVisit = new HospitalVisitRepository(_db);
