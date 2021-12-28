@@ -32,12 +32,10 @@ namespace Clinic.Models
         [ForeignKey("FatherNameId")]
         public Firstname FatherName { get; set; }
 
-        [Required]
         public int? FirstnameId { get; set; }
         [ForeignKey("FirstnameId")]
         public Firstname Firstname { get; set; }
 
-        [Required]
         public int? LastnameId { get; set; }
         [ForeignKey("LastnameId")]
         public Lastname Lastname { get; set; }
@@ -46,7 +44,6 @@ namespace Clinic.Models
         [ForeignKey("ProfessionId")]
         public Profession Profession { get; set; }
 
-        [Required]
         public int? AddressId { get; set; }
         [ForeignKey("AddressId")]
         public Address Address { get; set; }

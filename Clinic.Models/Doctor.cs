@@ -8,12 +8,10 @@ namespace Clinic.Models
     {
         public Guid Id { get; set; }
 
-        [Required]
         public int? FirstnameId { get; set; }
         [ForeignKey("FirstnameId")]
         public Firstname Firstname { get; set; }
 
-        [Required]
         public int? LastnameId { get; set; }
         [ForeignKey("LastnameId")]
         public Lastname Lastname { get; set; }

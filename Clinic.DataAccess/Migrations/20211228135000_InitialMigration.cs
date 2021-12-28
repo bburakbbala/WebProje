@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Clinic.DataAccess.Migrations
 {
-    public partial class AddModels : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,16 +25,18 @@ namespace Clinic.DataAccess.Migrations
                 name: "CountryOrRegions",
                 columns: table => new
                 {
-                    ISO3166Alpha3Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AlphaCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CountryOrRegions", x => x.ISO3166Alpha3Code);
+                    table.PrimaryKey("PK_CountryOrRegions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Departmants",
+                name: "Departments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +45,7 @@ namespace Clinic.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departmants", x => x.Id);
+                    table.PrimaryKey("PK_Departments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -114,33 +116,13 @@ namespace Clinic.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContryOrRegionCode = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_CountryOrRegions_ContryOrRegionCode",
-                        column: x => x.ContryOrRegionCode,
-                        principalTable: "CountryOrRegions",
-                        principalColumn: "ISO3166Alpha3Code",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContryOrRegionCode = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ContryOrRegionCode = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -149,7 +131,27 @@ namespace Clinic.DataAccess.Migrations
                         name: "FK_Cities_CountryOrRegions_ContryOrRegionCode",
                         column: x => x.ContryOrRegionCode,
                         principalTable: "CountryOrRegions",
-                        principalColumn: "ISO3166Alpha3Code",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Medicines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MedicineCategoryId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Medicines_MedicineCategories_MedicineCategoryId",
+                        column: x => x.MedicineCategoryId,
+                        principalTable: "MedicineCategories",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -161,37 +163,107 @@ namespace Clinic.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContryOrRegionCode = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    CountryOrRegionCode = table.Column<int>(type: "int", nullable: true),
+                    ContryOrRegionCode = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Provinces", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Provinces_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Provinces_CountryOrRegions_ContryOrRegionCode",
                         column: x => x.ContryOrRegionCode,
                         principalTable: "CountryOrRegions",
-                        principalColumn: "ISO3166Alpha3Code",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medicines",
+                name: "MedicineUsages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MedicineCategoryId = table.Column<int>(type: "int", nullable: false)
+                    Dose = table.Column<int>(type: "int", nullable: false),
+                    TypeOfUsage = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Frequency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MedicineId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medicines", x => x.Id);
+                    table.PrimaryKey("PK_MedicineUsages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Medicines_MedicineCategories_MedicineCategoryId",
-                        column: x => x.MedicineCategoryId,
-                        principalTable: "MedicineCategories",
+                        name: "FK_MedicineUsages_Medicines_MedicineId",
+                        column: x => x.MedicineId,
+                        principalTable: "Medicines",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddressDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContryOrRegionCode = table.Column<int>(type: "int", nullable: true),
+                    CityId = table.Column<int>(type: "int", nullable: true),
+                    ProvinceId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_CountryOrRegions_ContryOrRegionCode",
+                        column: x => x.ContryOrRegionCode,
+                        principalTable: "CountryOrRegions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Provinces_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Provinces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Addresses_Provinces_ProvinceId",
+                        column: x => x.ProvinceId,
+                        principalTable: "Provinces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TreatmentMedicines",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MedicineId = table.Column<int>(type: "int", nullable: true),
+                    MedicineUsageId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TreatmentMedicines", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TreatmentMedicines_Medicines_MedicineId",
+                        column: x => x.MedicineId,
+                        principalTable: "Medicines",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TreatmentMedicines_MedicineUsages_MedicineUsageId",
+                        column: x => x.MedicineUsageId,
+                        principalTable: "MedicineUsages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,8 +271,10 @@ namespace Clinic.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -210,7 +284,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,7 +293,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -229,7 +303,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,10 +318,10 @@ namespace Clinic.DataAccess.Migrations
                     BloodTypeId = table.Column<short>(type: "smallint", nullable: true),
                     MotherNameId = table.Column<int>(type: "int", nullable: true),
                     FatherNameId = table.Column<int>(type: "int", nullable: true),
-                    FirstnameId = table.Column<int>(type: "int", nullable: false),
-                    LastnameId = table.Column<int>(type: "int", nullable: false),
+                    FirstnameId = table.Column<int>(type: "int", nullable: true),
+                    LastnameId = table.Column<int>(type: "int", nullable: true),
                     ProfessionId = table.Column<int>(type: "int", nullable: true),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    AddressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,7 +331,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Patients_BloodTypes_BloodTypeId",
                         column: x => x.BloodTypeId,
@@ -275,7 +349,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.FirstnameId,
                         principalTable: "Firstnames",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Patients_Firstnames_MotherNameId",
                         column: x => x.MotherNameId,
@@ -287,7 +361,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.LastnameId,
                         principalTable: "Lastnames",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Patients_Professions_ProfessionId",
                         column: x => x.ProfessionId,
@@ -297,34 +371,12 @@ namespace Clinic.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicineUsages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Dose = table.Column<int>(type: "int", nullable: false),
-                    TypeOfUsage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Frequency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MedicineId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MedicineUsages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MedicineUsages_Medicines_MedicineId",
-                        column: x => x.MedicineId,
-                        principalTable: "Medicines",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstnameId = table.Column<int>(type: "int", nullable: false),
-                    LastnameId = table.Column<int>(type: "int", nullable: false),
+                    FirstnameId = table.Column<int>(type: "int", nullable: true),
+                    LastnameId = table.Column<int>(type: "int", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Resume = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -335,9 +387,9 @@ namespace Clinic.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Doctors_Departmants_DepartmantId",
+                        name: "FK_Doctors_Departments_DepartmantId",
                         column: x => x.DepartmantId,
-                        principalTable: "Departmants",
+                        principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -345,7 +397,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.FirstnameId,
                         principalTable: "Firstnames",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Doctors_Hospitals_HospitalId",
                         column: x => x.HospitalId,
@@ -357,7 +409,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.LastnameId,
                         principalTable: "Lastnames",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -373,9 +425,9 @@ namespace Clinic.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_HospitalDepartmants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HospitalDepartmants_Departmants_DepartmantId",
+                        name: "FK_HospitalDepartmants_Departments_DepartmantId",
                         column: x => x.DepartmantId,
-                        principalTable: "Departmants",
+                        principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -418,7 +470,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LabId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    LabId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -428,7 +480,7 @@ namespace Clinic.DataAccess.Migrations
                         column: x => x.LabId,
                         principalTable: "Labs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -452,28 +504,6 @@ namespace Clinic.DataAccess.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_HospitalVisits_Patients_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Treatments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AdmissionNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Treatments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Treatments_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
                         principalColumn: "Id",
@@ -514,27 +544,49 @@ namespace Clinic.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TreatmentMedicines",
+                name: "Treatments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MedicineId = table.Column<int>(type: "int", nullable: true),
-                    MedicineUsageId = table.Column<int>(type: "int", nullable: true)
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdmissionNote = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TreatmentMedicines", x => x.Id);
+                    table.PrimaryKey("PK_Treatments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TreatmentMedicines_Medicines_MedicineId",
-                        column: x => x.MedicineId,
-                        principalTable: "Medicines",
+                        name: "FK_Treatments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HospitalDoctors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HospitalId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HospitalDoctors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HospitalDoctors_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TreatmentMedicines_MedicineUsages_MedicineUsageId",
-                        column: x => x.MedicineUsageId,
-                        principalTable: "MedicineUsages",
+                        name: "FK_HospitalDoctors_Hospitals_HospitalId",
+                        column: x => x.HospitalId,
+                        principalTable: "Hospitals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -691,9 +743,19 @@ namespace Clinic.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Addresses_CityId",
+                table: "Addresses",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Addresses_ContryOrRegionCode",
                 table: "Addresses",
                 column: "ContryOrRegionCode");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_ProvinceId",
+                table: "Addresses",
+                column: "ProvinceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_ContryOrRegionCode",
@@ -738,6 +800,16 @@ namespace Clinic.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_HospitalDepartmants_HospitalId",
                 table: "HospitalDepartmants",
+                column: "HospitalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalDoctors_DoctorId",
+                table: "HospitalDoctors",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HospitalDoctors_HospitalId",
+                table: "HospitalDoctors",
                 column: "HospitalId");
 
             migrationBuilder.CreateIndex(
@@ -871,6 +943,11 @@ namespace Clinic.DataAccess.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Provinces_CityId",
+                table: "Provinces",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Provinces_ContryOrRegionCode",
                 table: "Provinces",
                 column: "ContryOrRegionCode");
@@ -909,13 +986,13 @@ namespace Clinic.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "DoctorTreatments");
 
             migrationBuilder.DropTable(
                 name: "HospitalDepartmants");
+
+            migrationBuilder.DropTable(
+                name: "HospitalDoctors");
 
             migrationBuilder.DropTable(
                 name: "HospitalLabs");
@@ -931,9 +1008,6 @@ namespace Clinic.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrescriptionMedicines");
-
-            migrationBuilder.DropTable(
-                name: "Provinces");
 
             migrationBuilder.DropTable(
                 name: "TestResults");
@@ -966,7 +1040,7 @@ namespace Clinic.DataAccess.Migrations
                 name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "Departmants");
+                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "Hospitals");
@@ -991,6 +1065,12 @@ namespace Clinic.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "MedicineCategories");
+
+            migrationBuilder.DropTable(
+                name: "Provinces");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
 
             migrationBuilder.DropTable(
                 name: "CountryOrRegions");

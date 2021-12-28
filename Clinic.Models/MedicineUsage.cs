@@ -25,7 +25,6 @@ namespace Clinic.Models
             }
         }
 
-        [Required]
         public int? MedicineId { get; set; }
         [ForeignKey("MedicineId")]
         public Medicine Medicine { get; set; }

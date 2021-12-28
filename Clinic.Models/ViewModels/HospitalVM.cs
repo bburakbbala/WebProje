@@ -9,10 +9,14 @@ namespace Clinic.Models.ViewModels
 
         public IEnumerable<SelectListItem> HospitalDepartmentList { get; set; }
 
-        public IEnumerable<SelectListItem> LabList { get; set; }
+        public IEnumerable<SelectListItem> HospitalLabList { get; set; }
 
-        public IEnumerable<SelectListItem> DoctorList { get; set; }
+        public IEnumerable<SelectListItem> HospitalDoctorList { get; set; }
 
-        public Address Address { get; set; }
+        public IEnumerable<SelectListItem> CountryOrRegionList { get; set; }
+
+        public IEnumerable<SelectListItem> CityList { get; set; }
+
+        public IEnumerable<SelectListItem> ProvinceList { get; set; }
     }
 }

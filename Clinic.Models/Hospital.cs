@@ -17,7 +17,6 @@ namespace Clinic.Models
         [Required]
         public string Description { get; set; }
 
-        [Required]
         public int? AddressId { get; set; }
         [ForeignKey("AddressId")]
         public Address Address { get; set; }

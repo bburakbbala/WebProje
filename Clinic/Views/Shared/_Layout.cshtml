@@ -22,17 +22,51 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
+                            <a class="nav-link" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                               asp-area="Admin" asp-controller="Hospital" asp-action="Index">
+                                Hospital
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Hospital Management
+                                Lab
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Hospital" asp-action="Index">Hospital</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Lab" asp-action="Index">Lab</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="LabMachine" asp-action="City">Lab Machine</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Province" asp-action="Index">Test</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                User
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Doctor" asp-action="Index">Doctor</a>
-                                <a class="dropdown-item" asp-area="Admin" asp-controller="Department" asp-action="Index">Departmant</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Patient" asp-action="Index">Patient</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Address
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="CountryOrRegion" asp-action="Index">Country Or Region</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="City" asp-action="Index">City</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Province" asp-action="Index">Province</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Languages
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="CountryOrRegion" asp-action="Index">English</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="City" asp-action="Index">Turkish</a>
+                            </div>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

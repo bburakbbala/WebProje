@@ -11,7 +11,6 @@ namespace Clinic.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public Guid? LabId { get; set; }
         [ForeignKey("LabId")]
         public Lab Lab { get; set; }

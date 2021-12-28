@@ -10,7 +10,6 @@ namespace Clinic.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public int? MedicineCategoryId { get; set; }
         [ForeignKey("MedicineCategoryId")]
         public MedicineCategory MedicineCategory { get; set; }

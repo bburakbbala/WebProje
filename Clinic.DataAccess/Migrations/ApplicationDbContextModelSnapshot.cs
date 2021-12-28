@@ -33,8 +33,8 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ContryOrRegionCode")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ContryOrRegionCode")
+                        .HasColumnType("int");
 
                     b.Property<int?>("ProvinceId")
                         .HasColumnType("int");
@@ -77,8 +77,8 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContryOrRegionCode")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ContryOrRegionCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -93,14 +93,20 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.CountryOrRegion", b =>
                 {
-                    b.Property<string>("ISO3166Alpha3Code")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AlphaCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ISO3166Alpha3Code");
+                    b.HasKey("Id");
 
                     b.ToTable("CountryOrRegions");
                 });
@@ -131,7 +137,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("FirstnameId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Gender")
@@ -141,7 +146,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("LastnameId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Resume")
@@ -209,7 +213,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("AddressId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -328,7 +331,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("AddressId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -349,7 +351,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("LabId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -412,7 +413,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("MedicineCategoryId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -457,7 +457,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MedicineId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("TypeOfUsage")
@@ -478,7 +477,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("AddressId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BirthDate")
@@ -491,7 +489,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("FirstnameId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Gender")
@@ -502,7 +499,6 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LastnameId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("MotherNameId")
@@ -638,9 +634,14 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContryOrRegionCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContryOrRegionCode")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryOrRegionCode")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -651,6 +652,8 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("ContryOrRegionCode");
 
@@ -1009,9 +1012,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.Firstname", "Firstname")
                         .WithMany()
-                        .HasForeignKey("FirstnameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FirstnameId");
 
                     b.HasOne("Clinic.Models.Hospital", "Hospital")
                         .WithMany()
@@ -1019,9 +1020,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.Lastname", "Lastname")
                         .WithMany()
-                        .HasForeignKey("LastnameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastnameId");
 
                     b.Navigation("Departmant");
 
@@ -1051,9 +1050,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
                 });
@@ -1122,9 +1119,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
                 });
@@ -1133,9 +1128,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.Lab", "Lab")
                         .WithMany()
-                        .HasForeignKey("LabId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LabId");
 
                     b.Navigation("Lab");
                 });
@@ -1159,9 +1152,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.MedicineCategory", "MedicineCategory")
                         .WithMany()
-                        .HasForeignKey("MedicineCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicineCategoryId");
 
                     b.Navigation("MedicineCategory");
                 });
@@ -1170,9 +1161,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.Medicine", "Medicine")
                         .WithMany()
-                        .HasForeignKey("MedicineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicineId");
 
                     b.Navigation("Medicine");
                 });
@@ -1181,9 +1170,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("Clinic.Models.BloodType", "BloodType")
                         .WithMany()
@@ -1195,15 +1182,11 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.Firstname", "Firstname")
                         .WithMany()
-                        .HasForeignKey("FirstnameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FirstnameId");
 
                     b.HasOne("Clinic.Models.Lastname", "Lastname")
                         .WithMany()
-                        .HasForeignKey("LastnameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LastnameId");
 
                     b.HasOne("Clinic.Models.Firstname", "MotherName")
                         .WithMany()
@@ -1287,13 +1270,17 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.Province", b =>
                 {
-                    b.HasOne("Clinic.Models.CountryOrRegion", "ContryOrRegion")
+                    b.HasOne("Clinic.Models.City", "City")
                         .WithMany()
-                        .HasForeignKey("ContryOrRegionCode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
-                    b.Navigation("ContryOrRegion");
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
+                        .WithMany()
+                        .HasForeignKey("ContryOrRegionCode");
+
+                    b.Navigation("City");
+
+                    b.Navigation("CountryOrRegion");
                 });
 
             modelBuilder.Entity("Clinic.Models.TestResult", b =>
