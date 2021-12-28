@@ -36,22 +36,22 @@
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
-                    City
-                </div>
-                <div class="col-8">
-                    @Html.DropDownListFor(m => m.Province.CityId, Model.CityList,
-                      "Select City", new { @class = "form-control" })
-                    <span asp-validation-for="Province.CityId" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row pt-2">
-                <div class="col-4 text-start">
                     Country or Region
                 </div>
                 <div class="col-8">
                     @Html.DropDownListFor(m => m.Province.CountryOrRegionCode, Model.CountryOrRegionList,
                       "Select Country or Region", new { @class = "form-control" })
                     <span asp-validation-for="Province.CountryOrRegionCode" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <div class="col-4 text-start">
+                    City
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Province.CityId, Model.CityList,
+                      "Select City", new { @class = "form-control" })
+                    <span asp-validation-for="Province.CityId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">

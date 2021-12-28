@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinic.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211228135000_InitialMigration")]
+    [Migration("20211228215514_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ContryOrRegionCode")
+                    b.Property<int?>("CountryOrRegionCode")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProvinceId")
@@ -45,7 +45,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("ContryOrRegionCode");
+                    b.HasIndex("CountryOrRegionCode");
 
                     b.HasIndex("ProvinceId");
 
@@ -79,7 +79,7 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ContryOrRegionCode")
+                    b.Property<int?>("CountryOrRegionCode")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -88,7 +88,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContryOrRegionCode");
+                    b.HasIndex("CountryOrRegionCode");
 
                     b.ToTable("Cities");
                 });
@@ -639,9 +639,6 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ContryOrRegionCode")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CountryOrRegionCode")
                         .HasColumnType("int");
 
@@ -657,7 +654,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("ContryOrRegionCode");
+                    b.HasIndex("CountryOrRegionCode");
 
                     b.ToTable("Provinces");
                 });
@@ -984,7 +981,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.CountryOrRegion", "ContryOrRegion")
                         .WithMany()
-                        .HasForeignKey("ContryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionCode");
 
                     b.HasOne("Clinic.Models.Province", "Province")
                         .WithMany()
@@ -999,11 +996,11 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.City", b =>
                 {
-                    b.HasOne("Clinic.Models.CountryOrRegion", "ContryOrRegion")
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
                         .WithMany()
-                        .HasForeignKey("ContryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionCode");
 
-                    b.Navigation("ContryOrRegion");
+                    b.Navigation("CountryOrRegion");
                 });
 
             modelBuilder.Entity("Clinic.Models.Doctor", b =>
@@ -1278,7 +1275,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
                         .WithMany()
-                        .HasForeignKey("ContryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionCode");
 
                     b.Navigation("City");
 

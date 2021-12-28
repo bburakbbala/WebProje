@@ -10,8 +10,8 @@ namespace Clinic.Models
         [Required]
         public string AddressDetail { get; set; }
 
-        public int? ContryOrRegionCode { get; set; }
-        [ForeignKey("ContryOrRegionCode")]
+        public int? CountryOrRegionCode { get; set; }
+        [ForeignKey("CountryOrRegionCode")]
         public CountryOrRegion ContryOrRegion { get; set; }
 
         public int? CityId { get; set; }

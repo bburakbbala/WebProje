@@ -58,7 +58,7 @@ namespace Clinic.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var allObj = await _unitOfWork.City.GetAllAsync(includeProperties: "CountryOrRegions");
+            var allObj = await _unitOfWork.City.GetAllAsync(includeProperties: "CountryOrRegion");
             return Json(new { data = allObj });
         }
 

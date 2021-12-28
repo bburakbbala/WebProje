@@ -30,9 +30,9 @@
                     Country or Region
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.City.ContryOrRegionCode, Model.CountryOrRegionList,
+                    @Html.DropDownListFor(m => m.City.CountryOrRegionCode, Model.CountryOrRegionList,
                    "Select Country or Region", new { @class = "form-control" })
-                    <span asp-validation-for="City.ContryOrRegionCode" class="text-danger"></span>
+                    <span asp-validation-for="City.CountryOrRegionCode" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">

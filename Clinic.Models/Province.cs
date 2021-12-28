@@ -19,7 +19,7 @@ namespace Clinic.Models
         public City City { get; set; }
         
         public int? CountryOrRegionCode { get; set; }
-        [ForeignKey("ContryOrRegionCode")]
+        [ForeignKey("CountryOrRegionCode")]
         public CountryOrRegion CountryOrRegion { get; set; }
     }
 }

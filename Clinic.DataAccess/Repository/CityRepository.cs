@@ -19,7 +19,7 @@ namespace Clinic.DataAccess.Repository
             if (objFromDb != null)
             {
                 objFromDb.Name = city.Name;
-                objFromDb.ContryOrRegionCode = objFromDb.ContryOrRegionCode;
+                objFromDb.CountryOrRegionCode = objFromDb.CountryOrRegionCode;
             }
         }
     }

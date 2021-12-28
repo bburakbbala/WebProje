@@ -21,7 +21,7 @@ namespace Clinic.DataAccess.Repository
                 objFromDb.Name = lab.Name;
                 objFromDb.Address.AddressDetail = lab.Address.AddressDetail;
                 objFromDb.Address.ContryOrRegion = lab.Address.ContryOrRegion;
-                objFromDb.Address.ContryOrRegionCode = lab.Address.ContryOrRegionCode;
+                objFromDb.Address.CountryOrRegionCode = lab.Address.CountryOrRegionCode;
             }
         }
     }
