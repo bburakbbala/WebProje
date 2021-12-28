@@ -15,6 +15,12 @@ namespace Clinic.DataAccess.Repository
 
         public void Update(City city)
         {
+            var objFromDb = _db.Cities.FirstOrDefault(d => d.Id == city.Id);
+            if (objFromDb != null)
+            {
+                objFromDb.Name = city.Name;
+                objFromDb.ContryOrRegionCode = objFromDb.ContryOrRegionCode;
+            }
         }
     }
 }

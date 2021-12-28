@@ -7,7 +7,7 @@
 <form method="post" enctype="multipart/form-data">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (Model.Hospital.Id.ToString().Equals(""))
+        @if (!Model.Hospital.Id.ToString().Equals(""))
         {
             // edit
             title = "Edit Hospital";
@@ -39,7 +39,7 @@
                     Address Detail
                 </div>
                 <div class="col-8">
-                    <textarea asp-for="Hospital.Address.AddressDetail" class="form-control"></textarea>
+                    <textarea asp-for="Hospital.AddressId" class="form-control"></textarea>
                     <span asp-validation-for="Hospital.Address.AddressDetail" class="text-danger"></span>
                 </div>
             </div>
@@ -48,22 +48,34 @@
                     Country or Region
                 </div>
                 <div class="col-8">
-                    <input asp-for="Hospital.Address.ContryOrRegion" class="form-control" />
-                    <span asp-validation-for="Hospital.Address.ContryOrRegion" class="text-danger"></span>
+                    @Html.DropDownListFor(m => m.Hospital.Address.ContryOrRegion, Model.CountryOrRegionList,
+                   "Select Country or Region", new { @class = "form-control" })
+                    <span asp-validation-for="Hospital.Address.ContryOrRegionCode" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
-                    Country or Region Code
+                    City
                 </div>
                 <div class="col-8">
-                    <input asp-for="Hospital.Address.ContryOrRegionCode" class="form-control" />
-                    <span asp-validation-for="Hospital.Address.ContryOrRegion" class="text-danger"></span>
+                    @Html.DropDownListFor(m => m.Hospital.Address.ProvinceId, Model.CityList,
+                   "Select City", new { @class = "form-control" })
+                    <span asp-validation-for="Hospital.Address.ProvinceId" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
-                    <label asp-for="Hospital.Name">Image</label>
+                    Province
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Hospital.Address.ProvinceId, Model.ProvinceList,
+                   "Select Province", new { @class = "form-control" })
+                    <span asp-validation-for="Hospital.Address.ProvinceId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row pt-2">
+                <div class="col-4 text-start">
+                    <label asp-for="Hospital.ImageUrl">Image</label>
                 </div>
                 <div class="col-8">
                     <input type="file" name="files" id="uploadBox" class="form-control" />
@@ -71,9 +83,9 @@
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    @if (Model.Hospital.Id.ToString().Equals(""))
+                    @if (!Model.Hospital.Id.ToString().Equals(""))
                     {
-                        <partial name="_EditAndBackToListButton" model="Model.Hospital.Id" />
+                        <partial name="_EditAndBackToListButtonGuidModal" model="Model.Hospital.Id" />
                     }
                     else
                     {
@@ -89,7 +101,7 @@
                 </div>
             </div>
         </div>
-        @if (Model.Hospital.Id.Equals(""))  // show in update
+        @if (!Model.Hospital.Id.Equals(""))  // show in update
         {
             <div class="col-3 float-end">
                 <img src="@Model.Hospital.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9">

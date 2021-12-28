@@ -31,17 +31,23 @@ namespace Clinic.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(Guid? id)
         {
-            IEnumerable<Department> departments = await _unitOfWork.Department.GetAllAsync();
-            IEnumerable<Lab> labs = await _unitOfWork.Lab.GetAllAsync();
+            IEnumerable<CountryOrRegion> countryOrRegionList = await _unitOfWork.CountryOrRegion.GetAllAsync();
+            IEnumerable<City> cities = await _unitOfWork.City.GetAllAsync();
+            IEnumerable<Province> provinces = await _unitOfWork.Province.GetAllAsync();
             HospitalVM hospitalVM = new HospitalVM()
             {
                 Hospital = new Hospital(),
-                HospitalDepartmentList = departments.Select(i => new SelectListItem
+                CountryOrRegionList = countryOrRegionList.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.AlphaCode
+                }),
+                CityList = cities.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
                 }),
-                LabList = departments.Select(i => new SelectListItem
+                ProvinceList = provinces.Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
@@ -66,7 +72,8 @@ namespace Clinic.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var allObj = await _unitOfWork.Hospital.GetAllAsync();
+            var allObj = await _unitOfWork.Hospital.GetAllAsync(
+                includeProperties: "HospitalDepartmentList, Lab, Doctor, City, Province");
             return Json(new { data = allObj });
         }
 

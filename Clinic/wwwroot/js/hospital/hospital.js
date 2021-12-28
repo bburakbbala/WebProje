@@ -16,7 +16,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div>
-                                <a href="/Admin/Department/Index" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/HospitalDepartment/Index/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     Departments
                                 </a>
                             </div>
@@ -28,7 +28,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div>
-                                <a href="/Admin/Hospital/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/HospitalLab/Index/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     Labs
                                 </a>
                             </div>
@@ -40,7 +40,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `
                             <div>
-                                <a href="/Admin/Hospital/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/HospitalDoctor/Index/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     Doctors
                                 </a>
                             </div>

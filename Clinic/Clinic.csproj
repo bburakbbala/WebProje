@@ -33,12 +33,8 @@
   <ItemGroup>
     <Folder Include="Areas\Patient\Controllers\" />
     <Folder Include="Areas\Patient\Views\" />
-    <Folder Include="Views\Shared\Address\CountryOrRegion\" />
-    <Folder Include="Views\Shared\Address\City\" />
-    <Folder Include="Views\Shared\Address\Province\" />
-    <Folder Include="Views\Shared\Firstname\" />
-    <Folder Include="Views\Shared\Lastname\" />
-    <Folder Include="Views\Shared\Profession\" />
+    <Folder Include="wwwroot\js\lab\" />
+    <Folder Include="wwwroot\js\user\" />
   </ItemGroup>
 
 </Project>
