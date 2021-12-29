@@ -33,7 +33,7 @@
   <ItemGroup>
     <Folder Include="Areas\Patient\Controllers\" />
     <Folder Include="Areas\Patient\Views\" />
-    <Folder Include="wwwroot\js\lab\" />
+    <Folder Include="wwwroot\images\hospitals\" />
     <Folder Include="wwwroot\js\user\" />
   </ItemGroup>
 

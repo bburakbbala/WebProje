@@ -1,9 +1,11 @@
-﻿using Clinic.DataAccess.Repository.IRepository;
+﻿using Clinic.DataAccess.Data;
+using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
 using Clinic.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +18,13 @@ namespace Clinic.Areas.Admin.Controllers
     public class HospitalController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
         private readonly IWebHostEnvironment _hostEnvironment; // for image uploading
 
-        public HospitalController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
+        public HospitalController(IUnitOfWork unitOfWork, ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
             _hostEnvironment = hostEnvironment;
         }
 
@@ -31,16 +35,34 @@ namespace Clinic.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(Guid? id)
         {
+            IEnumerable<HospitalDepartment> hospitalDepartmantList = await _unitOfWork.HospitalDepartment.GetAllAsync();
+            IEnumerable<HospitalLab> hospitalLabList = await _unitOfWork.HospitalLab.GetAllAsync();
+            IEnumerable<HospitalDoctor> hospitalDoctorList = await _unitOfWork.HospitalDoctor.GetAllAsync();
             IEnumerable<CountryOrRegion> countryOrRegionList = await _unitOfWork.CountryOrRegion.GetAllAsync();
             IEnumerable<City> cities = await _unitOfWork.City.GetAllAsync();
             IEnumerable<Province> provinces = await _unitOfWork.Province.GetAllAsync();
             HospitalVM hospitalVM = new HospitalVM()
             {
                 Hospital = new Hospital(),
+                HospitalDepartmentList = hospitalDepartmantList.Select(i => new SelectListItem
+                {
+                    Text = i.Department.Name,
+                    Value = i.Department.Id.ToString()
+                }),
+                HospitalLabList = hospitalLabList.Select(i => new SelectListItem
+                {
+                    Text = i.Lab.Name,
+                    Value = i.Lab.Id.ToString()
+                }),
+                HospitalDoctorList = hospitalDoctorList.Select(i => new SelectListItem
+                {
+                    Text = i.Doctor.FirstnameLastname,
+                    Value = i.Doctor.Id.ToString()
+                }),
                 CountryOrRegionList = countryOrRegionList.Select(i => new SelectListItem
                 {
                     Text = i.Name,
-                    Value = i.AlphaCode
+                    Value = i.Id.ToString()
                 }),
                 CityList = cities.Select(i => new SelectListItem
                 {
@@ -64,7 +86,7 @@ namespace Clinic.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View();
+            return View(hospitalVM);
         }
 
         #region API_CALS
@@ -72,8 +94,7 @@ namespace Clinic.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var allObj = await _unitOfWork.Hospital.GetAllAsync(
-                includeProperties: "HospitalDepartmentList, Lab, Doctor, City, Province");
+            var allObj = await _unitOfWork.Hospital.GetAllAsync();
             return Json(new { data = allObj });
         }
 
@@ -88,7 +109,7 @@ namespace Clinic.Areas.Admin.Controllers
                 if (files.Count > 0)
                 {
                     string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(webRootPath, @"images\hospitals\");
+                    var uploads = Path.Combine(webRootPath, @"images\hospitals");
                     var extension = Path.GetExtension(files[0].FileName);
 
                     if (hospitalVm.Hospital.ImageUrl != null)
@@ -108,14 +129,14 @@ namespace Clinic.Areas.Admin.Controllers
                 }
                 else
                 {
-                    // update do not change image
-                    if (!hospitalVm.Hospital.Id.Equals(""))
+                    // update do not change image when new image was not uploaded
+                    if (!hospitalVm.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000"))
                     {
                         Hospital objFromDb = await _unitOfWork.Hospital.GetAsync(hospitalVm.Hospital.Id);
                         hospitalVm.Hospital.ImageUrl = objFromDb.ImageUrl;
                     }
                 }
-                if (hospitalVm.Hospital.Id.Equals(""))
+                if (hospitalVm.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000"))
                 {
                     await _unitOfWork.Hospital.AddAsync(hospitalVm.Hospital);
                 }
@@ -125,6 +146,31 @@ namespace Clinic.Areas.Admin.Controllers
                 }
                 await _unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            else // if model is not valid this will retrive all data again so that it does not throw and error
+            {
+                IEnumerable<CountryOrRegion> countryOrRegionList = await _unitOfWork.CountryOrRegion.GetAllAsync();
+                IEnumerable<City> cities = await _unitOfWork.City.GetAllAsync();
+                IEnumerable<Province> provinces = await _unitOfWork.Province.GetAllAsync();
+                hospitalVm.CountryOrRegionList = countryOrRegionList.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                hospitalVm.CityList = cities.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                hospitalVm.ProvinceList = provinces.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
+                if (!hospitalVm.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000")) // update
+                {
+                    hospitalVm.Hospital = await _unitOfWork.Hospital.GetAsync(hospitalVm.Hospital.Id);
+                }
             }
             return View(hospitalVm);
         }

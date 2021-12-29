@@ -2,8 +2,8 @@
 
 namespace Clinic.DataAccess.Repository.IRepository
 {
-    public interface IHospitalDepartmentRepository : IRepositoryAsync<HospitalDepartmant>
+    public interface IHospitalDepartmentRepository : IRepositoryAsync<HospitalDepartment>
     {
-        void Update(HospitalDepartmant hospitalDepartmant);
+        void Update(HospitalDepartment hospitalDepartmant);
     }
 }

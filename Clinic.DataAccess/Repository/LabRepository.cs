@@ -19,9 +19,6 @@ namespace Clinic.DataAccess.Repository
             if (objFromDb != null)
             {
                 objFromDb.Name = lab.Name;
-                objFromDb.Address.AddressDetail = lab.Address.AddressDetail;
-                objFromDb.Address.ContryOrRegion = lab.Address.ContryOrRegion;
-                objFromDb.Address.CountryOrRegionCode = lab.Address.CountryOrRegionCode;
             }
         }
     }

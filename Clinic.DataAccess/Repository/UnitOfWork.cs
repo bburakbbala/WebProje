@@ -11,7 +11,6 @@ namespace Clinic.DataAccess.Repository
 
         public ISP_Call SP_Call { get; private set; }
 
-        public IAddressRepository Address { get; private set; }
         public IBloodTypeRepository BloodType { get; private set; }
         public ICityRepository City { get; private set; }
         public ICountryOrRegionRepository CountryOrRegion { get; private set; }
@@ -46,7 +45,6 @@ namespace Clinic.DataAccess.Repository
         {
             _db = db;
             SP_Call = new SP_Call(_db);
-            Address = new AddressRepository(_db);
             BloodType = new BloodTypeRepository(_db);
             City = new CityRepository(_db);
             CountryOrRegion = new CountryOrRegionRepository(db);

@@ -7,7 +7,7 @@
 <form method="post" enctype="multipart/form-data">
     <div class="row p-3 border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (!Model.Hospital.Id.ToString().Equals(""))
+        @if (!Model.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000"))
         {
             // edit
             title = "Edit Hospital";
@@ -39,8 +39,8 @@
                     Address Detail
                 </div>
                 <div class="col-8">
-                    <textarea asp-for="Hospital.AddressId" class="form-control"></textarea>
-                    <span asp-validation-for="Hospital.Address.AddressDetail" class="text-danger"></span>
+                    <textarea asp-for="Hospital.AddressDetail" class="form-control"></textarea>
+                    <span asp-validation-for="Hospital.AddressDetail" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row pt-2">
@@ -48,30 +48,30 @@
                     Country or Region
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.Hospital.Address.CountryOrRegionCode, Model.CountryOrRegionList,
+                    @Html.DropDownListFor(m => m.Hospital.CountryOrRegionId, Model.CountryOrRegionList,
                    "Select Country or Region", new { @class = "form-control" })
-                    <span asp-validation-for="Hospital.Address.CountryOrRegionCode" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="Hospital.CountryOrRegionId" class="text-danger"></span>
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
                     City
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.Hospital.Address.ProvinceId, Model.CityList,
+                    @Html.DropDownListFor(m => m.Hospital.CityId, Model.CityList,
                    "Select City", new { @class = "form-control" })
-                    <span asp-validation-for="Hospital.Address.ProvinceId" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="Hospital.CityId" class="text-danger"></span>
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
                     Province
                 </div>
                 <div class="col-8">
-                    @Html.DropDownListFor(m => m.Hospital.Address.ProvinceId, Model.ProvinceList,
+                    @Html.DropDownListFor(m => m.Hospital.ProvinceId, Model.ProvinceList,
                    "Select Province", new { @class = "form-control" })
-                    <span asp-validation-for="Hospital.Address.ProvinceId" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="Hospital.ProvinceId" class="text-danger"></span>
             </div>
             <div class="form-group row pt-2">
                 <div class="col-4 text-start">
@@ -83,7 +83,7 @@
             </div>
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    @if (!Model.Hospital.Id.ToString().Equals(""))
+                    @if (!Model.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000"))
                     {
                         <partial name="_EditAndBackToListButtonGuidModal" model="Model.Hospital.Id" />
                     }
@@ -101,10 +101,10 @@
                 </div>
             </div>
         </div>
-        @if (!Model.Hospital.Id.Equals(""))  // show in update
+        @if (!Model.Hospital.Id.ToString().Equals("00000000-0000-0000-0000-000000000000"))  // show in update
         {
-            <div class="col-3 float-end">
-                <img src="@Model.Hospital.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9">
+            <div class="col-3 pt-4">
+                <img src="@Model.Hospital.ImageUrl" style="border-radius:5px; border:1px solid #bbb9b9" />
             </div>
         }
     </div>

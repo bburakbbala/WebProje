@@ -1,7 +1,11 @@
 ﻿using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
+using Clinic.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Clinic.Areas.Admin.Controllers
@@ -24,20 +28,44 @@ namespace Clinic.Areas.Admin.Controllers
         // update and insert; id == null ? insert : update
         public async Task<IActionResult> Upsert(int? id)
         {
-            Lab lab = new Lab();
+            IEnumerable<CountryOrRegion> countryOrRegionList = await _unitOfWork.CountryOrRegion.GetAllAsync();
+            IEnumerable<City> cityList = await _unitOfWork.City.GetAllAsync();
+            IEnumerable<Province> provinceList = await _unitOfWork.Province.GetAllAsync();
+            IEnumerable<HospitalLab> hospitalLabList = await _unitOfWork.HospitalLab.GetAllAsync();
+            IEnumerable<LabMachine> labMachineList = await _unitOfWork.LabMachine.GetAllAsync();
+            IEnumerable<TestResult> testResultList = await _unitOfWork.TestResult.GetAllAsync();
+            LabVM labVM = new()
+            {
+                Lab = new Lab(),
+                CountryOrRegionList = countryOrRegionList.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                CityList = cityList.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                ProvinceList = provinceList.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
             if (id == null)
             {
                 // create
-                return View(lab);
+                return View(labVM);
             }
 
             // edit
-            lab = await _unitOfWork.Lab.GetAsync(id.GetValueOrDefault());
-            if (lab == null)
+            labVM.Lab = await _unitOfWork.Lab.GetAsync(id.GetValueOrDefault());
+            if (labVM.Lab == null)
             {
                 return NotFound();
             }
-            return View(lab);
+            return View(labVM);
         }
 
         #region API_CALS
@@ -51,17 +79,17 @@ namespace Clinic.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Lab lab)
+        public async Task<IActionResult> Upsert(LabVM lab)
         {
             if (ModelState.IsValid) // make sure validation is valid if client side is not working
             {
-                if (lab.Id.Equals(""))
+                if (lab.Lab.Id.Equals(""))
                 {
-                    await _unitOfWork.Lab.AddAsync(lab);
+                    await _unitOfWork.Lab.AddAsync(lab.Lab);
                 }
                 else
                 {
-                    _unitOfWork.Lab.Update(lab);
+                    _unitOfWork.Lab.Update(lab.Lab);
                 }
                 await _unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));

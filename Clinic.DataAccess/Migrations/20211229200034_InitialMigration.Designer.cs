@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinic.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211228215514_InitialMigration")]
+    [Migration("20211229200034_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryOrRegionCode")
+                    b.Property<int?>("CountryOrRegionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProvinceId")
@@ -45,7 +45,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("CountryOrRegionCode");
+                    b.HasIndex("CountryOrRegionId");
 
                     b.HasIndex("ProvinceId");
 
@@ -79,7 +79,7 @@ namespace Clinic.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CountryOrRegionCode")
+                    b.Property<int?>("CountryOrRegionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -88,7 +88,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryOrRegionCode");
+                    b.HasIndex("CountryOrRegionId");
 
                     b.ToTable("Cities");
                 });
@@ -235,14 +235,14 @@ namespace Clinic.DataAccess.Migrations
                     b.ToTable("Hospitals");
                 });
 
-            modelBuilder.Entity("Clinic.Models.HospitalDepartmant", b =>
+            modelBuilder.Entity("Clinic.Models.HospitalDepartment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DepartmantId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("HospitalId")
@@ -250,11 +250,11 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmantId");
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("HospitalId");
 
-                    b.ToTable("HospitalDepartmants");
+                    b.ToTable("HospitalDepartments");
                 });
 
             modelBuilder.Entity("Clinic.Models.HospitalDoctor", b =>
@@ -639,7 +639,7 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CountryOrRegionCode")
+                    b.Property<int?>("CountryOrRegionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -654,7 +654,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("CountryOrRegionCode");
+                    b.HasIndex("CountryOrRegionId");
 
                     b.ToTable("Provinces");
                 });
@@ -979,9 +979,9 @@ namespace Clinic.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("CityId");
 
-                    b.HasOne("Clinic.Models.CountryOrRegion", "ContryOrRegion")
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
                         .WithMany()
-                        .HasForeignKey("CountryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionId");
 
                     b.HasOne("Clinic.Models.Province", "Province")
                         .WithMany()
@@ -989,7 +989,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.Navigation("City");
 
-                    b.Navigation("ContryOrRegion");
+                    b.Navigation("CountryOrRegion");
 
                     b.Navigation("Province");
                 });
@@ -998,7 +998,7 @@ namespace Clinic.DataAccess.Migrations
                 {
                     b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
                         .WithMany()
-                        .HasForeignKey("CountryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionId");
 
                     b.Navigation("CountryOrRegion");
                 });
@@ -1054,17 +1054,17 @@ namespace Clinic.DataAccess.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Clinic.Models.HospitalDepartmant", b =>
+            modelBuilder.Entity("Clinic.Models.HospitalDepartment", b =>
                 {
-                    b.HasOne("Clinic.Models.Department", "Departmant")
+                    b.HasOne("Clinic.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmantId");
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("Clinic.Models.Hospital", "Hospital")
                         .WithMany()
                         .HasForeignKey("HospitalId");
 
-                    b.Navigation("Departmant");
+                    b.Navigation("Department");
 
                     b.Navigation("Hospital");
                 });
@@ -1275,7 +1275,7 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
                         .WithMany()
-                        .HasForeignKey("CountryOrRegionCode");
+                        .HasForeignKey("CountryOrRegionId");
 
                     b.Navigation("City");
 

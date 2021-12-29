@@ -23,9 +23,6 @@ namespace Clinic.DataAccess.Repository
                     objFromDb.ImageUrl = hospital.ImageUrl;
                 }
                 objFromDb.Name = hospital.Name;
-                objFromDb.Address.AddressDetail = hospital.Address.AddressDetail;
-                objFromDb.Address.ContryOrRegion = hospital.Address.ContryOrRegion;
-                objFromDb.Address.CountryOrRegionCode = hospital.Address.CountryOrRegionCode;
             }
         }
     }

@@ -11,8 +11,19 @@ namespace Clinic.Models
         [Required]
         public string Name { get; set; }
 
-        public int? AddressId { get; set; }
-        [ForeignKey("AddressId")]
-        public Address Address { get; set; }
+        [Required]
+        public string AddressDetail { get; set; }
+
+        public int? CountryOrRegionId { get; set; }
+        [ForeignKey("CountryOrRegionId")]
+        public CountryOrRegion CountryOrRegion { get; set; }
+
+        public int? CityId { get; set; }
+        [ForeignKey("CityId")]
+        public Province City { get; set; }
+
+        public int? ProvinceId { get; set; }
+        [ForeignKey("ProvinceId")]
+        public Province Province { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using Clinic.Models;
 
 namespace Clinic.DataAccess.Repository
 {
-    public class HospitalDepartmentRepository : RepositoryAsync<HospitalDepartmant>, IHospitalDepartmentRepository
+    public class HospitalDepartmentRepository : RepositoryAsync<HospitalDepartment>, IHospitalDepartmentRepository
     {
         private readonly ApplicationDbContext _db;
         public HospitalDepartmentRepository(ApplicationDbContext db) : base(db)
@@ -12,7 +12,7 @@ namespace Clinic.DataAccess.Repository
             _db = db;
         }
 
-        public void Update(HospitalDepartmant hospitalDepartmant)
+        public void Update(HospitalDepartment hospitalDepartmant)
         {
 
         }

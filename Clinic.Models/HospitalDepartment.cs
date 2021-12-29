@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Clinic.Models
 {
-    public class HospitalDepartmant
+    public class HospitalDepartment
     {
         public int Id { get; set; }
 
@@ -11,8 +11,8 @@ namespace Clinic.Models
         [ForeignKey("HospitalId")]
         public Hospital Hospital { get; set; }
 
-        public int? DepartmantId { get; set; }
-        [ForeignKey("DepartmantId")]
-        public Department Departmant { get; set; }
+        public int? DepartmentId { get; set; }
+        [ForeignKey("DepartmentId")]
+        public Department Department { get; set; }
     }
 }

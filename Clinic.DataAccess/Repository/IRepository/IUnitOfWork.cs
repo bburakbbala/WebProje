@@ -7,7 +7,7 @@ namespace Clinic.DataAccess.Repository.IRepository
     {
         ISP_Call SP_Call { get; }
         Task SaveAsync();
-        IAddressRepository Address { get; }
+
         IBloodTypeRepository BloodType { get; }
         ICityRepository City { get; }
         ICountryOrRegionRepository CountryOrRegion { get; }

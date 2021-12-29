@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clinic.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211229085654_ChangeCity")]
-    partial class ChangeCity
+    [Migration("20211229210714_RemoveAddressModel")]
+    partial class RemoveAddressModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,37 +20,6 @@ namespace Clinic.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Clinic.Models.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AddressDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CountryOrRegionCode")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProvinceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryOrRegionCode");
-
-                    b.HasIndex("ProvinceId");
-
-                    b.ToTable("Addresses");
-                });
 
             modelBuilder.Entity("Clinic.Models.BloodType", b =>
                 {
@@ -214,7 +183,14 @@ namespace Clinic.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<string>("AddressDetail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryOrRegionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -228,21 +204,28 @@ namespace Clinic.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryOrRegionId");
+
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Hospitals");
                 });
 
-            modelBuilder.Entity("Clinic.Models.HospitalDepartmant", b =>
+            modelBuilder.Entity("Clinic.Models.HospitalDepartment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("DepartmantId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<Guid?>("HospitalId")
@@ -250,11 +233,11 @@ namespace Clinic.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmantId");
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("HospitalId");
 
-                    b.ToTable("HospitalDepartmants");
+                    b.ToTable("HospitalDepartments");
                 });
 
             modelBuilder.Entity("Clinic.Models.HospitalDoctor", b =>
@@ -332,16 +315,30 @@ namespace Clinic.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<string>("AddressDetail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryOrRegionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryOrRegionId");
+
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Labs");
                 });
@@ -478,14 +475,21 @@ namespace Clinic.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("int");
+                    b.Property<string>("AddressDetail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<short?>("BloodTypeId")
                         .HasColumnType("smallint");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryOrRegionId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("FatherNameId")
                         .HasColumnType("int");
@@ -513,11 +517,16 @@ namespace Clinic.DataAccess.Migrations
                     b.Property<int?>("ProfessionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProvinceId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
                     b.HasIndex("BloodTypeId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryOrRegionId");
 
                     b.HasIndex("FatherNameId");
 
@@ -528,6 +537,8 @@ namespace Clinic.DataAccess.Migrations
                     b.HasIndex("MotherNameId");
 
                     b.HasIndex("ProfessionId");
+
+                    b.HasIndex("ProvinceId");
 
                     b.ToTable("Patients");
                 });
@@ -973,27 +984,6 @@ namespace Clinic.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Clinic.Models.Address", b =>
-                {
-                    b.HasOne("Clinic.Models.Province", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId");
-
-                    b.HasOne("Clinic.Models.CountryOrRegion", "ContryOrRegion")
-                        .WithMany()
-                        .HasForeignKey("CountryOrRegionCode");
-
-                    b.HasOne("Clinic.Models.Province", "Province")
-                        .WithMany()
-                        .HasForeignKey("ProvinceId");
-
-                    b.Navigation("City");
-
-                    b.Navigation("ContryOrRegion");
-
-                    b.Navigation("Province");
-                });
-
             modelBuilder.Entity("Clinic.Models.City", b =>
                 {
                     b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
@@ -1047,24 +1037,36 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.Hospital", b =>
                 {
-                    b.HasOne("Clinic.Models.Address", "Address")
+                    b.HasOne("Clinic.Models.Province", "City")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("CityId");
 
-                    b.Navigation("Address");
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
+                        .WithMany()
+                        .HasForeignKey("CountryOrRegionId");
+
+                    b.HasOne("Clinic.Models.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("CountryOrRegion");
+
+                    b.Navigation("Province");
                 });
 
-            modelBuilder.Entity("Clinic.Models.HospitalDepartmant", b =>
+            modelBuilder.Entity("Clinic.Models.HospitalDepartment", b =>
                 {
-                    b.HasOne("Clinic.Models.Department", "Departmant")
+                    b.HasOne("Clinic.Models.Department", "Department")
                         .WithMany()
-                        .HasForeignKey("DepartmantId");
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("Clinic.Models.Hospital", "Hospital")
                         .WithMany()
                         .HasForeignKey("HospitalId");
 
-                    b.Navigation("Departmant");
+                    b.Navigation("Department");
 
                     b.Navigation("Hospital");
                 });
@@ -1116,11 +1118,23 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.Lab", b =>
                 {
-                    b.HasOne("Clinic.Models.Address", "Address")
+                    b.HasOne("Clinic.Models.Province", "City")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("CityId");
 
-                    b.Navigation("Address");
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
+                        .WithMany()
+                        .HasForeignKey("CountryOrRegionId");
+
+                    b.HasOne("Clinic.Models.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("CountryOrRegion");
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("Clinic.Models.LabMachine", b =>
@@ -1167,13 +1181,17 @@ namespace Clinic.DataAccess.Migrations
 
             modelBuilder.Entity("Clinic.Models.Patient", b =>
                 {
-                    b.HasOne("Clinic.Models.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
-
                     b.HasOne("Clinic.Models.BloodType", "BloodType")
                         .WithMany()
                         .HasForeignKey("BloodTypeId");
+
+                    b.HasOne("Clinic.Models.Province", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("Clinic.Models.CountryOrRegion", "CountryOrRegion")
+                        .WithMany()
+                        .HasForeignKey("CountryOrRegionId");
 
                     b.HasOne("Clinic.Models.Firstname", "FatherName")
                         .WithMany()
@@ -1195,9 +1213,15 @@ namespace Clinic.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("ProfessionId");
 
-                    b.Navigation("Address");
+                    b.HasOne("Clinic.Models.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceId");
 
                     b.Navigation("BloodType");
+
+                    b.Navigation("City");
+
+                    b.Navigation("CountryOrRegion");
 
                     b.Navigation("FatherName");
 
@@ -1208,6 +1232,8 @@ namespace Clinic.DataAccess.Migrations
                     b.Navigation("MotherName");
 
                     b.Navigation("Profession");
+
+                    b.Navigation("Province");
                 });
 
             modelBuilder.Entity("Clinic.Models.PatientMedicine", b =>
