@@ -72,7 +72,7 @@ namespace Clinic.Areas.Admin.Controllers
             var cityList = _db.Cities.ToList();
             foreach (var province in provinceList)
             {
-                var countryOrRegionId = countryOrRegionList.FirstOrDefault(c => c.Id == province.CountryOrRegionCode).Id;
+                var countryOrRegionId = countryOrRegionList.FirstOrDefault(c => c.Id == province.CountryOrRegionId).Id;
                 province.CountryOrRegion.Name = countryOrRegionList.FirstOrDefault(c => c.Id == countryOrRegionId).Name;
                 if (province.CountryOrRegion == null)
                 {
