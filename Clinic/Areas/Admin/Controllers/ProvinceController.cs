@@ -1,8 +1,10 @@
-﻿using Clinic.DataAccess.Repository.IRepository;
+﻿using Clinic.DataAccess.Data;
+using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
 using Clinic.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,10 +15,12 @@ namespace Clinic.Areas.Admin.Controllers
     public class ProvinceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ApplicationDbContext _db;
 
-        public ProvinceController(IUnitOfWork unitOfWork)
+        public ProvinceController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -63,9 +67,22 @@ namespace Clinic.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var allObj = await _unitOfWork.Province.GetAllAsync(
-                includeProperties: "CountryOrRegion, City");
-            return Json(new { data = allObj });
+            var provinceList = _db.Provinces.Include(p => p.CountryOrRegion).Include(p => p.City).ToList();
+            var countryOrRegionList = _db.CountryOrRegions.ToList();
+            var cityList = _db.Cities.ToList();
+            foreach (var province in provinceList)
+            {
+                var countryOrRegionId = countryOrRegionList.FirstOrDefault(c => c.Id == province.CountryOrRegionCode).Id;
+                province.CountryOrRegion.Name = countryOrRegionList.FirstOrDefault(c => c.Id == countryOrRegionId).Name;
+                if (province.CountryOrRegion == null)
+                {
+                    province.CountryOrRegion = new()
+                    {
+                        Name = ""
+                    };
+                }
+            }
+            return Json(new { data = provinceList });
         }
 
         [HttpPost]
