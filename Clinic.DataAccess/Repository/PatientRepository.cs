@@ -1,7 +1,6 @@
 ﻿using Clinic.DataAccess.Data;
 using Clinic.DataAccess.Repository.IRepository;
 using Clinic.Models;
-using System.Linq;
 
 namespace Clinic.DataAccess.Repository
 {

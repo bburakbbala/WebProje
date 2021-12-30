@@ -17,7 +17,7 @@ namespace Clinic.Models
         public int? CityId { get; set; }
         [ForeignKey("CityId")]
         public City City { get; set; }
-        
+
         public int? CountryOrRegionId { get; set; }
         [ForeignKey("CountryOrRegionId")]
         public CountryOrRegion CountryOrRegion { get; set; }

@@ -35,7 +35,7 @@ namespace Clinic.DataAccess.Repository
         {
             return await dbSet.FindAsync(id);
         }
-        
+
         public async Task<T> GetAsync(string id)
         {
             return await dbSet.FindAsync(id);
@@ -97,7 +97,7 @@ namespace Clinic.DataAccess.Repository
             T entity = await dbSet.FindAsync(id);
             await RemoveAsync(entity);
         }
-        
+
         public async Task RemoveAsync(string id)
         {
             T entity = await dbSet.FindAsync(id);

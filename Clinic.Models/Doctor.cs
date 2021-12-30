@@ -1,20 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Clinic.Models
 {
-    public class Doctor
+    public class Doctor : IdentityUser
     {
-        public Guid Id { get; set; }
+        [Required]
+        public string Firstname { get; set; }
 
-        public int? FirstnameId { get; set; }
-        [ForeignKey("FirstnameId")]
-        public Firstname Firstname { get; set; }
-
-        public int? LastnameId { get; set; }
-        [ForeignKey("LastnameId")]
-        public Lastname Lastname { get; set; }
+        [Required]
+        public string Lastname { get; set; }
 
         [Required]
         public Gender Gender { get; set; }

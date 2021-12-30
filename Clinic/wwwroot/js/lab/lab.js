@@ -10,10 +10,11 @@ function loadDataTable() {
             "url": "/Admin/Lab/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "20%" },
-            { "data": "countryOrRegion.name", "width": "20%" },
-            { "data": "city.name", "width": "20%" },
-            { "data": "province.name", "width": "20%" },
+            { "data": "name", "width": "18%" },
+            { "data": "addressDetail", "width": "18%" },
+            { "data": "province.name", "width": "18%" },
+            { "data": "city.name", "width": "18%" },
+            { "data": "countryOrRegion.name", "width": "18%" },
             {
                 "data": "id",
                 "render": function (data) {
@@ -27,7 +28,7 @@ function loadDataTable() {
                                 </a>
                             </div>
                            `;2
-                }, "width": "40%"
+                }, "width": "10%"
             }
         ]
     });

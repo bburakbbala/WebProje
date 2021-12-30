@@ -13,7 +13,7 @@ namespace Clinic.Models
 
         public bool Status { get; set; }
 
-        public Guid? PatientId { get; set; }
+        public string? PatientId { get; set; }
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
     }

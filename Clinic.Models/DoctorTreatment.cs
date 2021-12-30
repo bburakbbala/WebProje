@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Clinic.Models
 {
@@ -7,7 +6,7 @@ namespace Clinic.Models
     {
         public int Id { get; set; }
 
-        public Guid? DoctorId { get; set; }
+        public string? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public Doctor Doctor { get; set; }
 

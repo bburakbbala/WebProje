@@ -17,7 +17,6 @@ namespace Clinic.DataAccess.Repository
         public IDepartmentRepository Department { get; private set; }
         public IDoctorRepository Doctor { get; private set; }
         public IDoctorTreatmentRepository DoctorTreatment { get; private set; }
-        public IFirstnameRepository Firstname { get; private set; }
         public IHospitalDepartmentRepository HospitalDepartment { get; private set; }
         public IHospitalDoctorRepository HospitalDoctor { get; private set; }
         public IHospitalLabRepository HospitalLab { get; private set; }
@@ -25,7 +24,6 @@ namespace Clinic.DataAccess.Repository
         public IHospitalVisitRepository HospitalVisit { get; private set; }
         public ILabMachineRepository LabMachine { get; private set; }
         public ILabRepository Lab { get; private set; }
-        public ILastnameRepository Lastname { get; private set; }
         public IMedicineCategoryRepository MedicineCategory { get; private set; }
         public IMedicineRepository Medicine { get; private set; }
         public IMedicineUsageRepository MedicineUsage { get; private set; }
@@ -50,7 +48,6 @@ namespace Clinic.DataAccess.Repository
             CountryOrRegion = new CountryOrRegionRepository(db);
             Department = new DepartmentRepository(_db);
             Doctor = new DoctorRepository(_db);
-            Firstname = new FirstnameRepository(_db);
             HospitalDepartment = new HospitalDepartmentRepository(_db);
             HospitalDoctor = new HospitalDoctorRepository(_db);
             HospitalLab = new HospitalLabRepository(_db);
@@ -58,8 +55,7 @@ namespace Clinic.DataAccess.Repository
             HospitalVisit = new HospitalVisitRepository(_db);
             LabMachine = new LabMachineRepository(_db);
             Lab = new LabRepository(_db);
-            Lastname = new LastnameRepository(_db);
-            MedicineCategory= new MedicineCategoryRepository(_db);
+            MedicineCategory = new MedicineCategoryRepository(_db);
             Medicine = new MedicineRepository(_db);
             MedicineUsage = new MedicineUsageRepository(_db);
             PatientMedicine = new PatientMedicineRepository(_db);

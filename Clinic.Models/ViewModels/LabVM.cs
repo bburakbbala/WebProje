@@ -5,7 +5,7 @@ namespace Clinic.Models.ViewModels
 {
     public class LabVM
     {
-        public Lab Lab{ get; set; }
+        public Lab Lab { get; set; }
 
         public IEnumerable<SelectListItem> HospitalLabList { get; set; }
 

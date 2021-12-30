@@ -79,22 +79,22 @@ namespace Clinic.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(LabVM lab)
+        public async Task<IActionResult> Upsert(LabVM labVm)
         {
             if (ModelState.IsValid) // make sure validation is valid if client side is not working
             {
-                if (lab.Lab.Id.Equals(""))
+                if (labVm.Lab.Id.Equals(""))
                 {
-                    await _unitOfWork.Lab.AddAsync(lab.Lab);
+                    await _unitOfWork.Lab.AddAsync(labVm.Lab);
                 }
                 else
                 {
-                    _unitOfWork.Lab.Update(lab.Lab);
+                    _unitOfWork.Lab.Update(labVm.Lab);
                 }
                 await _unitOfWork.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(lab);
+            return View(labVm);
         }
 
         [HttpDelete]

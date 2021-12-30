@@ -11,7 +11,7 @@ namespace Clinic.DataAccess.Repository.IRepository
         Task<T> GetAsync(int id);
 
         Task<T> GetAsync(Guid id);
-        
+
         Task<T> GetAsync(string id);
 
         Task<IEnumerable<T>> GetAllAsync(

@@ -19,7 +19,7 @@ namespace Clinic.Models
 
         public string Note { get; set; }
 
-        public Guid? PatientId { get; set; }
+        public string? PatientId { get; set; }
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
 
@@ -27,7 +27,7 @@ namespace Clinic.Models
         [ForeignKey("LabId")]
         public Lab Lab { get; set; }
 
-        public Guid? DoctorId { get; set; }
+        public string? DoctorId { get; set; }
         [ForeignKey("DoctorId")]
         public Doctor Doctor { get; set; }
     }
